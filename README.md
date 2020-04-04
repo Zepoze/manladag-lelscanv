@@ -1,2 +1,2 @@
 # manladag-lelscanv
-source lelscanv
+source lelscanv for manladag
