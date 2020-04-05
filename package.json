@@ -1,8 +1,9 @@
 {
   "name": "@manladag/lelscanv",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "source lelscanv",
   "main": "./dist/index.js",
+  "types": "./dist/index.d.js",
   "scripts": {
     "build": "tsc",
     "test": "mocha --timeout 30000 --reporter spec"
