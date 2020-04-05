@@ -1,4 +1,3 @@
-import { manga, source} from "@manladag/source";
 import { JSDOM } from 'jsdom'
 
 export const url:string = 'http://lelscanv.com'
