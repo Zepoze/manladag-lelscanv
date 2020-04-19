@@ -1,6 +1,6 @@
 {
   "name": "@manladag/lelscanv",
-  "version": "0.0.3",
+  "version": "1.0.0",
   "description": "source lelscanv",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -19,14 +19,13 @@
   },
   "homepage": "https://github.com/Zepoze/manladag-lelscanv#readme",
   "devDependencies": {
-    "@manladag/types": "0.0.2",
+    "@manladag/types": "^1.0.0",
     "@types/jsdom": "^16.2.0",
     "chai": "^4.2.0",
     "mocha": "^7.1.1",
     "typescript": "^3.8.3"
   },
   "dependencies": {
-    "@manladag/source": "^1.0.2",
     "jsdom": "^16.2.2"
   }
 }

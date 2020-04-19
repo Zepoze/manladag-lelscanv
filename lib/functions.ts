@@ -25,7 +25,8 @@ const Mangas:{[name:string]:mangalelscanv} = {
     }
 }
 
-function _getUrlPages(manga:mangalelscanv,chapter:number,numberPage:number):Promise<string[]> {
+async function _getUrlPages(manga:mangalelscanv,chapter:number):Promise<string[]> {
+    const numberPage = await _getNumberPage(manga,chapter)
     const tabURL:string[] = []
     for(let i =0;i<numberPage;i++) tabURL.push(
         `${url+'/mangas'+manga.pagePath}/${chapter}/${i<10 ? '0'+i : i}.jpg`
