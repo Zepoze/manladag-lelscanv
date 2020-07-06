@@ -28,9 +28,7 @@ const Mangas:{[name:string]:mangalelscanv} = {
 async function _getUrlPages(manga:mangalelscanv,chapter:number):Promise<string[]> {
     const numberPage = await _getNumberPage(manga,chapter)
     const tabURL:string[] = []
-    for(let i =0;i<numberPage;i++) tabURL.push(
-        `${url+'/mangas'+manga.pagePath}/${chapter}/${i<10 ? '0'+i : i}.jpg`
-    )
+    for(let i =1;i<=numberPage;i++) tabURL.push( await _getUrlOfPage(i,manga,chapter))
     return Promise.resolve(tabURL)
 }
 
@@ -72,6 +70,19 @@ async function _getLastChapter(manga:mangalelscanv):Promise<number> {
     }
 }
 
+async function _getUrlOfPage(page:number,manga:mangalelscanv,chapter:number ,dom?: JSDOM) {
+
+    const DomPage = dom ? dom : await JSDOM.fromURL('http://lelscanv.com'+manga.path+'/'+chapter+'/'+page)
+
+    const img = DomPage.window.document.querySelector('#image img')
+    let pageUrl:string|undefined
+    if(img) {
+        const src = img.getAttribute('src')
+        if(src) pageUrl = src.replace(/(.+\/(\d{1,})\.(png|jpg))(.+)/,'$1')
+    }
+    if(pageUrl == undefined) throw new Error(`Impossible to get page\'s url n°${page} of ${manga.name} n°${chapter}`)
+    return url+pageUrl
+}
 
 export const LelScanv:source = {
     mangas: Mangas,site:'LelScanv',
