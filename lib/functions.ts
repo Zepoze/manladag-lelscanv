@@ -26,13 +26,13 @@ const Mangas:{[name:string]:mangalelscanv} = {
 }
 
 async function _getUrlPages(manga:mangalelscanv,chapter:number):Promise<string[]> {
-    const numberPage = await _getNumberPage(manga,chapter)
-    const tabURL:string[] = []
-    for(let i =1;i<=numberPage;i++) tabURL.push( await _getUrlOfPage(i,manga,chapter))
-    return Promise.resolve(tabURL)
+    const { numberPage, dom } = await _getNumberPage(manga,chapter)
+    const tabURL:Promise<string>[] = []
+    for(let i =1;i<=numberPage;i++) tabURL.push( _getUrlOfPage(i,manga,chapter, i==1 ? dom: undefined))
+    return Promise.all(tabURL)
 }
 
-async function _getNumberPage(manga:mangalelscanv,chapter:number): Promise<number> {
+async function _getNumberPage(manga:mangalelscanv,chapter:number): Promise<{numberPage:number,dom:JSDOM}> {
     const dom = await JSDOM.fromURL('http://lelscanv.com'+manga.path+'/'+chapter,{
         includeNodeLocations: true
     })
@@ -44,7 +44,7 @@ async function _getNumberPage(manga:mangalelscanv,chapter:number): Promise<numbe
 
     const nb = tabEl.map(e=> e.innerHTML).filter(e => parseInt(e)>0).length
 
-    return Promise.resolve(nb)
+    return Promise.resolve({numberPage:nb,dom})
 } 
 
 async function _chapterIsAvailable(manga:mangalelscanv,chapter:number) :Promise<boolean> {
@@ -87,7 +87,7 @@ async function _getUrlOfPage(page:number,manga:mangalelscanv,chapter:number ,dom
 export const LelScanv:source = {
     mangas: Mangas,site:'LelScanv',
     url,
-    getNumberPageChapter:_getNumberPage,
+    getNumberPageChapter:async (m:mangalelscanv,c) => (await _getNumberPage(m,c)).numberPage,
     getUrlPages:_getUrlPages,
     chapterIsAvailable:_chapterIsAvailable,
     getLastChapter:_getLastChapter
