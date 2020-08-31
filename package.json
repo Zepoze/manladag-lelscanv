@@ -1,11 +1,12 @@
 {
   "name": "@manladag/lelscanv",
-  "version": "1.1.3",
+  "version": "1.1.4",
   "description": "source lelscanv",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "scripts": {
-    "build": "tsc",
+    "build": "./node_modules/typescript/bin/tsc",
+    "prepublishOnly": "./node_modules/typescript/bin/tsc",
     "test": "mocha --timeout 30000 --reporter spec"
   },
   "repository": {
