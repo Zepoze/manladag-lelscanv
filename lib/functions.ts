@@ -169,7 +169,7 @@ async function _getUrlOfPage(page:number,manga:mangalelscanv,chapter:number ,dom
         if(src) pageUrl = src.replace(/(.+\/(\d{1,})\.(png|jpg))(.+)/,'$1')
     }
     if(pageUrl == undefined) throw new Error(`Impossible to get page\'s url n°${page} of ${manga.name} n°${chapter}`)
-    return url+pageUrl
+    return DomPage.window._origin+pageUrl
 }
 
 export const LelScanv:source = {
