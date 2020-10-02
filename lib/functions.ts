@@ -1,6 +1,6 @@
 import { JSDOM } from 'jsdom'
 
-export const url:string = 'http://lelscanv.com'
+export const url:string = 'http://lelscan.net'
 
 declare interface mangalelscanv extends manga {
     keyName: string
@@ -121,7 +121,7 @@ async function _getUrlPages(manga:mangalelscanv,chapter:number):Promise<string[]
 }
 
 async function _getNumberPage(manga:mangalelscanv,chapter:number): Promise<{numberPage:number,dom:JSDOM}> {
-    const dom = await JSDOM.fromURL('http://lelscanv.com/scan-'+manga.keyName+'/'+chapter,{
+    const dom = await JSDOM.fromURL(url+'/scan-'+manga.keyName+'/'+chapter,{
         includeNodeLocations: true
     })
 
@@ -136,7 +136,7 @@ async function _getNumberPage(manga:mangalelscanv,chapter:number): Promise<{numb
 } 
 
 async function _chapterIsAvailable(manga:mangalelscanv,chapter:number) :Promise<boolean> {
-    const dom = await JSDOM.fromURL('http://lelscanv.com/scan-'+manga.keyName+'/'+chapter,{
+    const dom = await JSDOM.fromURL(url+'/scan-'+manga.keyName+'/'+chapter,{
         includeNodeLocations: true
     })
    
@@ -149,7 +149,7 @@ async function _chapterIsAvailable(manga:mangalelscanv,chapter:number) :Promise<
 
 async function _getLastChapter(manga:mangalelscanv):Promise<number> {
     try {
-        const dom = await JSDOM.fromURL('http://lelscanv.com/lecture-en-ligne-'+manga.keyName,{
+        const dom = await JSDOM.fromURL(url+'/lecture-en-ligne-'+manga.keyName,{
             includeNodeLocations: true
         })
         return Promise.resolve(parseInt(dom.window.document.querySelectorAll("#header-image h2 div a span")[2].innerHTML))
@@ -160,7 +160,7 @@ async function _getLastChapter(manga:mangalelscanv):Promise<number> {
 
 async function _getUrlOfPage(page:number,manga:mangalelscanv,chapter:number ,dom?: JSDOM) {
 
-    const DomPage = dom ? dom : await JSDOM.fromURL('http://lelscanv.com/scan-'+manga.keyName+'/'+chapter+'/'+page)
+    const DomPage = dom ? dom : await JSDOM.fromURL(url+'/scan-'+manga.keyName+'/'+chapter+'/'+page)
 
     const img = DomPage.window.document.querySelector('#image img')
     let pageUrl:string|undefined
