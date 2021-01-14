@@ -41,7 +41,7 @@ const Mangas:{[name:string]:mangalelscanv} = {
     },
     'd-gray-man': {
         name: 'D Gray Man',
-        keyName: 'd-hray-name'
+        keyName: 'd-gray-man'
     },
     'shingeki-no-kyojin': {
         name: 'Shingeki No Kyojin',
