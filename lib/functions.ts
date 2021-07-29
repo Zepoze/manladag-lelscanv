@@ -172,11 +172,24 @@ async function _getUrlOfPage(page:number,manga:mangalelscanv,chapter:number ,dom
     return DomPage.window._origin+pageUrl
 }
 
+async function _getChaptersAvailable(manga:mangalelscanv,fromChapter: number, toChapter: number): Promise<number[]>{
+    try {
+        const dom = await JSDOM.fromURL(url+'/lecture-en-ligne-'+manga.keyName,{
+            includeNodeLocations: true
+        })
+        const sortTab = [fromChapter,toChapter].sort((a,b)=> a-b)
+        return Promise.resolve(Array.from(dom.window.document.querySelectorAll("#header-image select option")).map((nl)=> parseFloat(nl.innerHTML)).filter(chap => chap >= sortTab[0] &&  chap <= sortTab[1]  ))
+    } catch(e) {
+        throw e
+    }
+}
+
 export const LelScanv:source = {
     mangas: Mangas,site:'LelScanv',
     url,
     getNumberPageChapter:async (m:mangalelscanv,c) => (await _getNumberPage(m,c)).numberPage,
     getUrlPages:_getUrlPages,
     chapterIsAvailable:_chapterIsAvailable,
-    getLastChapter:_getLastChapter
+    getLastChapter:_getLastChapter,
+    getChaptersAvailable: _getChaptersAvailable
 }
