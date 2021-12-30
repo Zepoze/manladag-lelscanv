@@ -1,8 +1,8 @@
 import { JSDOM } from 'jsdom'
-
+import {Manladag} from '@manladag/source'
 export const url:string = 'http://lelscan.net'
 
-declare interface mangalelscanv extends manga {
+interface mangalelscanv extends Manladag.manga {
     keyName: string
 }
 
@@ -110,6 +110,38 @@ const Mangas:{[name:string]:mangalelscanv} = {
     'beelzebub': {
         name: 'Beelzebub',
         keyName: 'beelzebub'
+    },
+    'solo-leveling': {
+        name: 'Solo Leveling',
+        keyName: 'solo-leveling'
+    },
+    'tokyo-revengers': {
+        name: 'Tokyo Revengers',
+        keyName: 'tokyo-revengers'
+    },
+    "fire-force": {
+		"name": "Fire Force",
+		"keyName": "fire-force"
+	},
+    "four-knights-of-the-apocalypse": {
+		"name": "Four Knights Of The Apocalypse",
+		"keyName": "four-knights-of-the-apocalypse"
+	},
+    "kingdom": {
+		"name": "Kingdom",
+		"keyName": "kingdom"
+	},
+    "blue-lock": {
+		"name": "Blue Lock",
+		"keyName": "blue-lock"
+	},
+    "kaiju-no-8": {
+		"name": "Kaiju No 8",
+		"keyName": "kaiju-no-8"
+	},
+    "juujika-no-rokunin": {
+		"name": "Juujika No Rokunin",
+		"keyName": "juujika-no-rokunin"
     }
 }
 
@@ -184,7 +216,7 @@ async function _getChaptersAvailable(manga:mangalelscanv,fromChapter: number, to
     }
 }
 
-export const LelScanv:source = {
+export const LelScanv:Manladag.source = {
     mangas: Mangas,site:'LelScanv',
     url,
     getNumberPageChapter:async (m:mangalelscanv,c) => (await _getNumberPage(m,c)).numberPage,

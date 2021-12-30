@@ -2,6 +2,7 @@
 var chai = require('chai')
 var expect = chai.expect
 var index = require('../dist/index.js').Source
+const fetch = require('./fetchAllmangas')
 var os = require('os')
 var Path = require('path')
 
@@ -20,6 +21,12 @@ describe('Lelscan interface test', () => {
     })
     it('Should return a last chapter >990',async () => {
         const result = await index.getLastChapter(index.mangas["one-piece"])
-        expect(result>=990).to.equal(true)
+        expect(result).to.be.greaterThan(990)
     })
+
+    it('Chapter available betweesn chap n°1000 - 1035',async function() {
+       const tab = await index.getChaptersAvailable(index.mangas["one-piece"],1000,1035);
+       expect(tab.length).eq(37)
+    })
+    describe('check mangas',fetch.bind(this))
 })
